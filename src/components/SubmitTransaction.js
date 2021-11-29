@@ -2,22 +2,25 @@ import { useEffect } from 'react';
 const StellarSdk = require('stellar-sdk');
 
 const server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
-const emitterAccountPublicKey = 'GBJDIEEJ4HUXQSYNINVBAJ35FLSUGFFVLPBHVI65R42GUDKIMJ7PKHGJ';
-const emitterAccountPrivateKey = 'SBJYCFTUCM5GLIZNXRO5T7HTEY2IILMP2GHUTXQMDIAMRCF25U333PCF';
 
 const SubmitTransaction = (props) => {
+  const issuerAccountPrivateKey = props.issuerAccountPrivateKey;
   const borrowerAccount = props.borrowerAccount;
-  const submitTransactionClicked = props.submitTransactionClicked;
-  const setSubmitTransactionClicked = props.setSubmitTransactionClicked;
+  const submitTransactionIsClicked = props.submitTransactionIsClicked;
+  const setSubmitTransactionIsClicked = props.setSubmitTransactionIsClicked;
+
+  // Derive Keypair object and public key (that starts with a G) from the secret
+  const sourceKeypair = StellarSdk.Keypair.fromSecret(issuerAccountPrivateKey);
+  const issuerAccountPublicKey = sourceKeypair.publicKey();
   useEffect(() => {
     if (
       borrowerAccount.length === 56 &&
       borrowerAccount.charAt(0) === 'G' &&
-      submitTransactionClicked === true
+      submitTransactionIsClicked === true
     ) {
-      setSubmitTransactionClicked(false);
+      setSubmitTransactionIsClicked(false);
       async function SubmitTransactionAsync() {
-        const account = await server.loadAccount(emitterAccountPublicKey);
+        const account = await server.loadAccount(issuerAccountPublicKey);
 
         /*
         Right now, we have one function that fetches the base fee.
@@ -42,7 +45,7 @@ const SubmitTransaction = (props) => {
           .build();
 
         // sign the transaction
-        transaction.sign(StellarSdk.Keypair.fromSecret(emitterAccountPrivateKey));
+        transaction.sign(StellarSdk.Keypair.fromSecret(issuerAccountPrivateKey));
 
         try {
           const transactionResult = await server.submitTransaction(transaction);
@@ -55,7 +58,13 @@ const SubmitTransaction = (props) => {
     } else {
       return null;
     }
-  }, [borrowerAccount, setSubmitTransactionClicked, submitTransactionClicked]);
+  }, [
+    borrowerAccount,
+    issuerAccountPrivateKey,
+    issuerAccountPublicKey,
+    setSubmitTransactionIsClicked,
+    submitTransactionIsClicked,
+  ]);
 
   return null;
 };
