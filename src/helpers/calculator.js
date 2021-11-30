@@ -5,3 +5,11 @@ export const calculateMinimumRepayment = (loanAmount) => {
   const PAYMENTS = 5 * 12;
   return (loanAmount * (INTEREST * (INTEREST + 1) ** PAYMENTS)) / ((INTEREST + 1) ** PAYMENTS - 1);
 };
+
+export const calculateTotalLoanAmount = (loanAmount, minimumRepayment) => {
+  const PAYMENTS = 5 * 12;
+
+  return minimumRepayment * PAYMENTS;
+};
+
+export const calculateBorrowerRewards = (loanAmount, repaymentAmount) => {};

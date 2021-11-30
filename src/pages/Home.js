@@ -1,26 +1,33 @@
 import React from 'react';
-import { useState } from 'react';
-import { calculateMinimumRepayment } from '../helpers/calculator';
+import { useState, useEffect } from 'react';
+import { calculateMinimumRepayment, calculateTotalLoanAmount } from '../helpers/calculator';
 import { sendWNT } from '../helpers/stellar';
-// import CreateBorrowerAccountPublicKey from '../components/CreateBorrowerAccountPublicKey';
 
 const Home = (props) => {
   const [loanAmount, setLoanAmount] = useState(Number);
   const [minimumRepayment, setMinimumRepayment] = useState(Number);
   const [repaymentAmount, setRepaymentAmount] = useState(0);
+  const [totalLoanAmount, setTotalLoanAmount] = useState(Number);
 
   const setBorrowerAccountPublicKey = props.setBorrowerAccountPublicKey;
   const borrowerAccountPublicKey = props.borrowerAccountPublicKey;
   const borrowerAccountPrivateKey = props.borrowerAccountPrivateKey;
   const setBorrowerAccountPrivateKey = props.setBorrowerAccountPrivateKey;
+
+  useEffect(() => {
+    setMinimumRepayment(calculateMinimumRepayment(loanAmount));
+  }, [loanAmount]);
+
+  useEffect(() => {
+    setTotalLoanAmount(calculateTotalLoanAmount(loanAmount, minimumRepayment));
+  }, [loanAmount, minimumRepayment]);
+
   function handleSetLoanAmount(e) {
-    setLoanAmount(e.target.value);
+    setLoanAmount(Number(e.target.value));
   }
 
   function handleSetRepaymentAmount(e) {
-    setRepaymentAmount(e.target.value);
-    setMinimumRepayment(calculateMinimumRepayment(loanAmount));
-    console.log(minimumRepayment);
+    setRepaymentAmount(Number(e.target.value));
   }
 
   function handleSetBorrowerAccountPublicKey(e) {
@@ -37,10 +44,6 @@ const Home = (props) => {
     sendWNT(borrowerAccountPublicKey, borrowerAccountPrivateKey);
   }
 
-  // function handleSetCreateBorrowerAccountPublicKey(e) {
-  //   e.preventDefault();
-  //   CreateBorrowerAccountPublicKey();
-  // }
   return (
     <div>
       <form>
