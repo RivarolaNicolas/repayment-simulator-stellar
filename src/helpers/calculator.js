@@ -1,0 +1,7 @@
+export const calculateMinimumRepayment = (loanAmount) => {
+  //8% annual interest / 12 months
+  const INTEREST = 0.08 / 12;
+  //Five years * 12 months
+  const PAYMENTS = 5 * 12;
+  return (loanAmount * (INTEREST * (INTEREST + 1) ** PAYMENTS)) / ((INTEREST + 1) ** PAYMENTS - 1);
+};
