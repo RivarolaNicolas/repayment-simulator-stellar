@@ -1,35 +1,45 @@
 import React from 'react';
 import { useState } from 'react';
-import CalculateMinimumRepayment from '../components/CalculateMinimumRepayment';
-// import CreateBorrowerAccount from '../components/CreateBorrowerAccount';
+import { calculateMinimumRepayment } from '../helpers/calculator';
+import { sendWNT } from '../helpers/stellar';
+// import CreateBorrowerAccountPublicKey from '../components/CreateBorrowerAccountPublicKey';
 
 const Home = (props) => {
   const [loanAmount, setLoanAmount] = useState(Number);
   const [minimumRepayment, setMinimumRepayment] = useState(Number);
-  const [repaymentAmount, setRepaymentAmount] = useState(Number);
-  const setSubmitTransactionClicked = props.setSubmitTransactionClicked;
-  const setBorrowerAccount = props.setBorrowerAccount;
+  const [repaymentAmount, setRepaymentAmount] = useState(0);
 
+  const setBorrowerAccountPublicKey = props.setBorrowerAccountPublicKey;
+  const borrowerAccountPublicKey = props.borrowerAccountPublicKey;
+  const borrowerAccountPrivateKey = props.borrowerAccountPrivateKey;
+  const setBorrowerAccountPrivateKey = props.setBorrowerAccountPrivateKey;
   function handleSetLoanAmount(e) {
     setLoanAmount(e.target.value);
   }
 
   function handleSetRepaymentAmount(e) {
     setRepaymentAmount(e.target.value);
+    setMinimumRepayment(calculateMinimumRepayment(loanAmount));
+    console.log(minimumRepayment);
   }
 
-  function handleSetBorrowerAccount(e) {
-    setBorrowerAccount(e.target.value);
+  function handleSetBorrowerAccountPublicKey(e) {
+    setBorrowerAccountPublicKey(e.target.value);
+  }
+
+  function handleSetBorrowerAccountPrivateKey(e) {
+    setBorrowerAccountPrivateKey(e.target.value);
+    console.log(e.target.value);
   }
 
   function handleSubmitTransactionClicked(e) {
     e.preventDefault();
-    setSubmitTransactionClicked(true);
+    sendWNT(borrowerAccountPublicKey, borrowerAccountPrivateKey);
   }
 
-  // function handleSetCreateBorrowerAccount(e) {
+  // function handleSetCreateBorrowerAccountPublicKey(e) {
   //   e.preventDefault();
-  //   CreateBorrowerAccount();
+  //   CreateBorrowerAccountPublicKey();
   // }
   return (
     <div>
@@ -42,17 +52,14 @@ const Home = (props) => {
           onChange={handleSetRepaymentAmount}
           className={repaymentAmount > minimumRepayment ? 'border ' : 'border-2 border-red-500'}
         ></input>
-        <h4>Enter the borrower's stellar account:</h4>
-        <input type="text" onChange={handleSetBorrowerAccount}></input>
+        <h4>Enter your stellar account public key:</h4>
+        <input type="text" onChange={handleSetBorrowerAccountPublicKey}></input>
+        <h4>Enter your stellar account private key:</h4>
+        <input type="text" onChange={handleSetBorrowerAccountPrivateKey}></input>
         <button type="button" onClick={handleSubmitTransactionClicked}>
           Submit
         </button>
       </form>
-      <CalculateMinimumRepayment
-        loanAmount={loanAmount}
-        minimumRepayment={minimumRepayment}
-        setMinimumRepayment={setMinimumRepayment}
-      />
     </div>
   );
 };
