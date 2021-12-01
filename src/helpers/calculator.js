@@ -13,3 +13,8 @@ export const calculateTotalLoanAmount = (loanAmount, minimumRepayment) => {
 };
 
 export const calculateBorrowerRewards = (loanAmount, repaymentAmount) => {};
+
+export const calculate2PercentOfInterestPaid = (loanAmount, repaymentAmount, totalLoanAmount) => {
+  const totalInterestAmount = totalLoanAmount - loanAmount;
+  return repaymentAmount * ((totalInterestAmount * 100) / totalLoanAmount / 100) * 0.02;
+};

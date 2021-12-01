@@ -1,7 +1,7 @@
 const StellarSdk = require('stellar-sdk');
 
 const issuerAccountPrivateKey = 'SBNJMFBUVROLXVHVZUK3SXXB5I6MN3AUJSUX5WCTQN6WBEDDZPF7DDJZ';
-// const borrowerAccountPublicKey = 'SDZGGESB5BZBV2E6W4SOSZZ4P2H7N5P2MA6Z6CQNVUGDXNGYQQV5FVJR';
+const liquidityPoolPrivateKey = 'SCWLRNLRPUQSEODBQASR5VSWWF7AM2A6EJKU4P54XMCMNLCJ54PTBZJA';
 export const sendWNT = (borrowerAccountPublicKey, borrowerAccountPrivateKey, amount) => {
   // Keys for accounts to issue and receive the new asset
   const issuingKeys = StellarSdk.Keypair.fromSecret(issuerAccountPrivateKey);
@@ -61,5 +61,13 @@ export const sendWNT = (borrowerAccountPublicKey, borrowerAccountPrivateKey, amo
     .catch(function (error) {
       console.error('Error!', error);
     });
+  return null;
+};
+
+export const sendTwoPercentInterestPaidToLiquidityPool = (
+  twoPercentOfInterestPaid,
+  poolPublicKey,
+  poolSecretKey
+) => {
   return null;
 };

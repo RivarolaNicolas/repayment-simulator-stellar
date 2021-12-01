@@ -1,6 +1,10 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { calculateMinimumRepayment, calculateTotalLoanAmount } from '../helpers/calculator';
+import {
+  calculateMinimumRepayment,
+  calculateTotalLoanAmount,
+  calculate2PercentOfInterestPaid,
+} from '../helpers/calculator';
 import { sendWNT } from '../helpers/stellar';
 
 const Home = (props) => {
@@ -8,6 +12,7 @@ const Home = (props) => {
   const [minimumRepayment, setMinimumRepayment] = useState(Number);
   const [repaymentAmount, setRepaymentAmount] = useState(0);
   const [totalLoanAmount, setTotalLoanAmount] = useState(Number);
+  const [twoPercentOfInterestPaid, setTwoPercentOfInterestPaid] = useState(Number);
 
   const setBorrowerAccountPublicKey = props.setBorrowerAccountPublicKey;
   const borrowerAccountPublicKey = props.borrowerAccountPublicKey;
@@ -21,6 +26,13 @@ const Home = (props) => {
   useEffect(() => {
     setTotalLoanAmount(calculateTotalLoanAmount(loanAmount, minimumRepayment));
   }, [loanAmount, minimumRepayment]);
+
+  useEffect(() => {
+    setTwoPercentOfInterestPaid(
+      calculate2PercentOfInterestPaid(loanAmount, repaymentAmount, totalLoanAmount)
+    );
+    console.log(twoPercentOfInterestPaid);
+  }, [loanAmount, repaymentAmount, totalLoanAmount, twoPercentOfInterestPaid]);
 
   function handleSetLoanAmount(e) {
     setLoanAmount(Number(e.target.value));
