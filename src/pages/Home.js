@@ -4,15 +4,17 @@ import {
   calculateMinimumRepayment,
   calculateTotalLoanAmount,
   calculate2PercentOfInterestPaid,
+  calculateBorrowerRewards,
 } from '../helpers/calculator';
-import { sendWNT } from '../helpers/stellar';
+import { sendWNT, sendAUDToThePool } from '../helpers/stellar';
 
 const Home = (props) => {
-  const [loanAmount, setLoanAmount] = useState(Number);
-  const [minimumRepayment, setMinimumRepayment] = useState(Number);
+  const [loanAmount, setLoanAmount] = useState(String);
+  const [minimumRepayment, setMinimumRepayment] = useState(String);
   const [repaymentAmount, setRepaymentAmount] = useState(0);
-  const [totalLoanAmount, setTotalLoanAmount] = useState(Number);
-  const [twoPercentOfInterestPaid, setTwoPercentOfInterestPaid] = useState(Number);
+  const [totalLoanAmount, setTotalLoanAmount] = useState(String);
+  const [twoPercentOfInterestPaid, setTwoPercentOfInterestPaid] = useState(String);
+  const [borrowerRewards, setBorrowerRewards] = useState(String);
 
   const setBorrowerAccountPublicKey = props.setBorrowerAccountPublicKey;
   const borrowerAccountPublicKey = props.borrowerAccountPublicKey;
@@ -24,15 +26,20 @@ const Home = (props) => {
   }, [loanAmount]);
 
   useEffect(() => {
-    setTotalLoanAmount(calculateTotalLoanAmount(loanAmount, minimumRepayment));
+    setTotalLoanAmount(calculateTotalLoanAmount(loanAmount, minimumRepayment).toFixed(2));
   }, [loanAmount, minimumRepayment]);
 
   useEffect(() => {
     setTwoPercentOfInterestPaid(
-      calculate2PercentOfInterestPaid(loanAmount, repaymentAmount, totalLoanAmount)
+      calculate2PercentOfInterestPaid(loanAmount, repaymentAmount, totalLoanAmount).toFixed(2)
     );
-    console.log(twoPercentOfInterestPaid);
   }, [loanAmount, repaymentAmount, totalLoanAmount, twoPercentOfInterestPaid]);
+
+  useEffect(() => {
+    setBorrowerRewards(
+      calculateBorrowerRewards(minimumRepayment, repaymentAmount, twoPercentOfInterestPaid)
+    );
+  }, [minimumRepayment, repaymentAmount, twoPercentOfInterestPaid]);
 
   function handleSetLoanAmount(e) {
     setLoanAmount(Number(e.target.value));
@@ -48,30 +55,32 @@ const Home = (props) => {
 
   function handleSetBorrowerAccountPrivateKey(e) {
     setBorrowerAccountPrivateKey(e.target.value);
-    console.log(e.target.value);
   }
 
   function handleSubmitTransactionClicked(e) {
     e.preventDefault();
-    sendWNT(borrowerAccountPublicKey, borrowerAccountPrivateKey);
+    sendWNT(borrowerAccountPublicKey, borrowerAccountPrivateKey, borrowerRewards);
+    setTimeout(() => {
+      sendAUDToThePool(twoPercentOfInterestPaid);
+    }, 15000);
   }
 
   return (
-    <div>
-      <form>
-        <h4>Enter loan amount:</h4>
+    <div className="">
+      <form className="">
+        <h4 className="text-white">Enter loan amount:</h4>
         <input type="number" onChange={handleSetLoanAmount}></input>
-        <h4>Enter repayment amount:</h4>
+        <h4 className="text-white">Enter repayment amount:</h4>
         <input
           type="number"
           onChange={handleSetRepaymentAmount}
           className={repaymentAmount > minimumRepayment ? 'border ' : 'border-2 border-red-500'}
         ></input>
-        <h4>Enter your stellar account public key:</h4>
+        <h4 className="text-white">Enter your stellar account public key:</h4>
         <input type="text" onChange={handleSetBorrowerAccountPublicKey}></input>
-        <h4>Enter your stellar account private key:</h4>
+        <h4 className="text-white">Enter your stellar account private key:</h4>
         <input type="text" onChange={handleSetBorrowerAccountPrivateKey}></input>
-        <button type="button" onClick={handleSubmitTransactionClicked}>
+        <button type="button" className="text-white" onClick={handleSubmitTransactionClicked}>
           Submit
         </button>
       </form>
