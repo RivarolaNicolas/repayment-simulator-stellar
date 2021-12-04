@@ -6,7 +6,7 @@ import {
   calculate2PercentOfInterestPaid,
   calculateBorrowerRewards,
 } from '../helpers/calculator';
-import { sendWNT, sendAUDToThePool } from '../helpers/stellar';
+import { transactionSubmitter } from '../helpers/stellar';
 
 const Home = (props) => {
   const [loanAmount, setLoanAmount] = useState(String);
@@ -59,10 +59,7 @@ const Home = (props) => {
 
   function handleSubmitTransactionClicked(e) {
     e.preventDefault();
-    sendWNT(borrowerAccountPublicKey, borrowerAccountPrivateKey, borrowerRewards);
-    setTimeout(() => {
-      sendAUDToThePool(twoPercentOfInterestPaid);
-    }, 15000);
+    transactionSubmitter(borrowerAccountPrivateKey, borrowerRewards, twoPercentOfInterestPaid);
   }
 
   return (
