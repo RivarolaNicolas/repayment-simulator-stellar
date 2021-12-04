@@ -15,6 +15,7 @@ const Home = (props) => {
   const [totalLoanAmount, setTotalLoanAmount] = useState(String);
   const [twoPercentOfInterestPaid, setTwoPercentOfInterestPaid] = useState(String);
   const [borrowerRewards, setBorrowerRewards] = useState(String);
+  const [transactionSuccessful, setTransactionSuccessful] = useState(false);
 
   const setBorrowerAccountPublicKey = props.setBorrowerAccountPublicKey;
   const borrowerAccountPublicKey = props.borrowerAccountPublicKey;
@@ -59,7 +60,12 @@ const Home = (props) => {
 
   function handleSubmitTransactionClicked(e) {
     e.preventDefault();
-    transactionSubmitter(borrowerAccountPrivateKey, borrowerRewards, twoPercentOfInterestPaid);
+    transactionSubmitter(
+      borrowerAccountPrivateKey,
+      borrowerRewards,
+      twoPercentOfInterestPaid,
+      setTransactionSuccessful
+    );
   }
 
   return (
@@ -80,6 +86,7 @@ const Home = (props) => {
         <button type="button" className="text-white" onClick={handleSubmitTransactionClicked}>
           Submit
         </button>
+        {transactionSuccessful ? <h1>Transaction successfull</h1> : ''}
       </form>
     </div>
   );
