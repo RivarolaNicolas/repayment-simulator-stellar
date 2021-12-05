@@ -43,12 +43,12 @@ const Home = (props) => {
   }, [loanAmount]);
 
   useEffect(() => {
-    setTotalLoanAmount(calculateTotalLoanAmount(loanAmount, minimumRepayment).toFixed(2));
+    setTotalLoanAmount(calculateTotalLoanAmount(loanAmount, minimumRepayment));
   }, [loanAmount, minimumRepayment]);
 
   useEffect(() => {
     setTwoPercentOfInterestPaid(
-      calculate2PercentOfInterestPaid(loanAmount, repaymentAmount, totalLoanAmount).toFixed(2)
+      calculate2PercentOfInterestPaid(loanAmount, repaymentAmount, totalLoanAmount)
     );
   }, [loanAmount, repaymentAmount, totalLoanAmount, twoPercentOfInterestPaid]);
 

@@ -17,7 +17,7 @@
   "scripts": {
     "start": "craco start",
     "build": "craco build",
-    "test": "craco test -- --coverage",
+    "test": "react-scripts test",
     "eject": "react-scripts eject",
     "cypress:open": "cypress open"
   },
@@ -41,6 +41,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.16.4",
     "@testing-library/cypress": "^8.0.2",
     "@testing-library/react": "^11.2.7",
     "autoprefixer": "^9.8.8",

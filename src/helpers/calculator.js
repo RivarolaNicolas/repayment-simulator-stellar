@@ -12,7 +12,7 @@ export const calculateMinimumRepayment = (loanAmount) => {
 export const calculateTotalLoanAmount = (loanAmount, minimumRepayment) => {
   const PAYMENTS = 5 * 12;
 
-  return minimumRepayment * PAYMENTS.toFixed(2);
+  return (minimumRepayment * PAYMENTS).toFixed(2);
 };
 
 export const calculateBorrowerRewards = (
@@ -34,7 +34,7 @@ export const calculateBorrowerRewards = (
 
 export const calculate2PercentOfInterestPaid = (loanAmount, repaymentAmount, totalLoanAmount) => {
   const totalInterestAmount = totalLoanAmount - loanAmount;
-  return (
-    repaymentAmount * ((totalInterestAmount * 100) / totalLoanAmount / 100) * (0.02).toFixed(2)
+  return (repaymentAmount * ((totalInterestAmount * 100) / totalLoanAmount / 100) * 0.02).toFixed(
+    2
   );
 };
