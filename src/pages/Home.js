@@ -11,12 +11,12 @@ import { transactionSubmitter } from '../helpers/stellar';
 import { SiStellar } from 'react-icons/si';
 
 const Home = (props) => {
-  const [loanAmount, setLoanAmount] = useState(String);
-  const [minimumRepayment, setMinimumRepayment] = useState(String);
+  const [loanAmount, setLoanAmount] = useState(Number);
+  const [minimumRepayment, setMinimumRepayment] = useState(Number);
   const [repaymentAmount, setRepaymentAmount] = useState(0);
-  const [totalLoanAmount, setTotalLoanAmount] = useState(String);
-  const [twoPercentOfInterestPaid, setTwoPercentOfInterestPaid] = useState(String);
-  const [borrowerRewards, setBorrowerRewards] = useState(String);
+  const [totalLoanAmount, setTotalLoanAmount] = useState(Number);
+  const [twoPercentOfInterestPaid, setTwoPercentOfInterestPaid] = useState(Number);
+  const [borrowerRewards, setBorrowerRewards] = useState(Number);
   const [transactionSuccessful, setTransactionSuccessful] = useState(null);
   const [hide, setHide] = useState('invisible');
   const [alertColor, setAlertColor] = useState('');
