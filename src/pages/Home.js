@@ -21,6 +21,7 @@ const Home = (props) => {
   const [hide, setHide] = useState('invisible');
   const [alertColor, setAlertColor] = useState('');
   const [alertMessage, setAlertMessage] = useState('');
+  const [isHidden, setIsHidden] = useState(true);
 
   const borrowerAccountPrivateKey = props.borrowerAccountPrivateKey;
   const setBorrowerAccountPrivateKey = props.setBorrowerAccountPrivateKey;
@@ -66,7 +67,13 @@ const Home = (props) => {
   }
 
   function handleSetBorrowerAccountPrivateKey(e) {
-    setBorrowerAccountPrivateKey(e.target.value);
+    if (e.target.value.length === 56 && e.target.value.indexOf('S') === 0) {
+      setBorrowerAccountPrivateKey(e.target.value);
+      setIsHidden(false);
+    } else {
+      setIsHidden(true);
+      setBorrowerAccountPrivateKey(false);
+    }
   }
 
   function handleSubmitTransactionClicked(e) {
@@ -112,7 +119,11 @@ const Home = (props) => {
                     type="text"
                     id="search-form-location"
                     onChange={handleSetRepaymentAmount}
-                    className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                    className={
+                      repaymentAmount > minimumRepayment
+                        ? 'rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent '
+                        : 'rounded-lg border-transparent flex-1 appearance-none border border-red-500 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent '
+                    }
                     placeholder="Repayment amount"
                   />
                 </div>
@@ -129,16 +140,24 @@ const Home = (props) => {
                       type="text"
                       id="search-form-name"
                       onChange={handleSetBorrowerAccountPrivateKey}
-                      className=" rounded-lg border-transparent border border-gray-300 bg-white placeholder-gray-400 text-gray-700 appearance-none w-full block pl-14 focus:outline-none"
+                      className=" rounded-lg border-transparent border border-gray-300 bg-white placeholder-gray-400 text-gray-700 appearance-none w-full block pl-14 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                       placeholder="Stellar Private Key"
                     />
                   </label>
+                  {borrowerAccountPrivateKey == false ? (
+                    <div className="text-gray-500 mt-2">
+                      Enter valid Private Key to be able to submit transaction
+                    </div>
+                  ) : (
+                    ''
+                  )}
                 </div>
               </div>
               <div>
                 <span className="block w-full rounded-md shadow-sm">
                   <button
                     type="button"
+                    hidden={isHidden}
                     onClick={handleSubmitTransactionClicked}
                     className="py-2 px-4  bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
                   >
