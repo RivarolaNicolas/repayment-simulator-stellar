@@ -74,7 +74,10 @@ export const transactionSubmitter = (
       transaction.sign(issuingKeys);
       return server.submitTransaction(transaction);
     })
-    .then(() => setTransactionSuccessful(true))
+    .then(
+      () => setTransactionSuccessful(true),
+      () => setTransactionSuccessful(false)
+    )
     .catch(function (error) {
       console.error('Error!', error);
     });
