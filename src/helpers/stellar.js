@@ -5,7 +5,8 @@ const issuerAccountPrivateKey = 'SBNJMFBUVROLXVHVZUK3SXXB5I6MN3AUJSUX5WCTQN6WBED
 export const transactionSubmitter = (
   borrowerAccountPrivateKey,
   borrowerRewards,
-  twoPercentOfInterestPaid
+  twoPercentOfInterestPaid,
+  setTransactionSuccessful
 ) => {
   const server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
   // Keys for accounts to issue and receive the new asset
@@ -73,7 +74,7 @@ export const transactionSubmitter = (
       transaction.sign(issuingKeys);
       return server.submitTransaction(transaction);
     })
-    .then(console.log)
+    .then(() => setTransactionSuccessful(true))
     .catch(function (error) {
       console.error('Error!', error);
     });

@@ -8,7 +8,7 @@ function App() {
   const [borrowerAccountPublicKey, setBorrowerAccountPublicKey] = useState('');
   const [borrowerAccountPrivateKey, setBorrowerAccountPrivateKey] = useState('');
   return (
-    <div>
+    <div className="w-screen h-screen">
       <Home
         borrowerAccountPublicKey={borrowerAccountPublicKey}
         setBorrowerAccountPublicKey={setBorrowerAccountPublicKey}
