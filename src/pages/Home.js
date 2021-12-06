@@ -22,6 +22,7 @@ const Home = (props) => {
   const [alertColor, setAlertColor] = useState('');
   const [alertMessage, setAlertMessage] = useState('');
   const [isHidden, setIsHidden] = useState(true);
+  const [isMinimumRepaymentAlertHidden, setIsMinimumRepaymentAlertHidden] = useState(true);
 
   const borrowerAccountPrivateKey = props.borrowerAccountPrivateKey;
   const setBorrowerAccountPrivateKey = props.setBorrowerAccountPrivateKey;
@@ -86,6 +87,14 @@ const Home = (props) => {
     );
   }
 
+  useEffect(() => {
+    if (minimumRepayment <= repaymentAmount) {
+      setIsMinimumRepaymentAlertHidden(true);
+    } else if (minimumRepayment > repaymentAmount) {
+      setIsMinimumRepaymentAlertHidden(false);
+    }
+  }, [minimumRepayment, repaymentAmount]);
+
   return (
     <div className="overflow-x-hidden overflow-y-hidden ">
       <div className="bg-white rounded-lg shadow sm:max-w-md sm:w-full sm:mx-auto sm:overflow-hidden md:my-10 ">
@@ -126,6 +135,9 @@ const Home = (props) => {
                     }
                     placeholder="Repayment amount"
                   />
+                  <p className="text-red-500" hidden={isMinimumRepaymentAlertHidden}>
+                    You have to make equal or more than the minimum repayment
+                  </p>
                 </div>
               </div>
               <div className="w-full">
