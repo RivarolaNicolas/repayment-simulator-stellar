@@ -9,5 +9,7 @@ test('should calculate borrower rewards', () => {
     calculateBorrowerRewards(minimumRepayment, repaymentAmount, twoPercentOfInterestPaid)
   ).toBe(twoPercentOfInterestPaid);
 
-  expect(calculateBorrowerRewards(minimumRepayment, 608.3, twoPercentOfInterestPaid)).toBe(0.01);
+  expect(
+    Number(calculateBorrowerRewards(minimumRepayment, 608.3, twoPercentOfInterestPaid).toFixed(2))
+  ).toBe(0.01);
 });

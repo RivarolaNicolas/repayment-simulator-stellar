@@ -4,5 +4,5 @@ const loanAmount = 30000;
 const minimumRepayment = 608.29;
 
 test('should return total loan amount (interest included)', () => {
-  expect(calculateTotalLoanAmount(loanAmount, minimumRepayment)).toBe(36497.4);
+  expect(Number(calculateTotalLoanAmount(loanAmount, minimumRepayment).toFixed(2))).toBe(36497.4);
 });
