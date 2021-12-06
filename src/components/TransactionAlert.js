@@ -7,10 +7,11 @@ const TransactionAlert = (props) => {
   return (
     <div>
       <p
+        hidden={hidden}
         className={
           transactionSuccessful == true
-            ? 'text-green-600 bg-green-100 rounded ' + hidden
-            : 'text-red-600 bg-red-100 rounded ' + hidden
+            ? 'text-green-600 bg-green-100 rounded'
+            : 'text-red-600 bg-red-100 rounded'
         }
       >
         {alertMessage}
