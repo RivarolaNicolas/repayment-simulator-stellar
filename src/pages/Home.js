@@ -19,7 +19,7 @@ const Home = (props) => {
   const [borrowerRewards, setBorrowerRewards] = useState(Number);
   const [transactionSuccessful, setTransactionSuccessful] = useState(null);
   const [hide, setHide] = useState('invisible');
-  const [alertColor, setAlertColor] = useState('');
+
   const [alertMessage, setAlertMessage] = useState('');
   const [isHidden, setIsHidden] = useState(true);
   const [isMinimumRepaymentAlertHidden, setIsMinimumRepaymentAlertHidden] = useState(true);
@@ -30,11 +30,9 @@ const Home = (props) => {
   useEffect(() => {
     if (transactionSuccessful === true) {
       setHide(false);
-      setAlertColor('green');
       setAlertMessage('Transaction Succesful');
     } else if (transactionSuccessful === false) {
       setHide(false);
-      setAlertColor('red');
       setAlertMessage('Transaction Failed');
     }
   }, [transactionSuccessful]);
@@ -182,7 +180,13 @@ const Home = (props) => {
           </div>
         </div>
         <div className="px-4 py-6 border-t-2 border-gray-200 bg-gray-50 sm:px-10">
-          {<TransactionAlert alertColor={alertColor} hidden={hide} alertMessage={alertMessage} />}
+          {
+            <TransactionAlert
+              transactionSuccessful={transactionSuccessful}
+              hidden={hide}
+              alertMessage={alertMessage}
+            />
+          }
         </div>
       </div>
     </div>

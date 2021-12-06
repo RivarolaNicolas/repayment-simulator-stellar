@@ -1,4 +1,5 @@
 {
+  "homepage": "https://rivarolanicolas.github.io/repayment-simulator-stellar",
   "name": "repayment-simulator-stellar",
   "version": "0.1.0",
   "private": true,
@@ -15,6 +16,8 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "craco start",
     "build": "craco build",
     "test": "react-scripts test",
@@ -47,6 +50,7 @@
     "autoprefixer": "^9.8.8",
     "cypress": "^9.1.1",
     "eslint-plugin-cypress": "^2.12.1",
+    "gh-pages": "^3.2.3",
     "postcss": "^7.0.39",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17"
   }
