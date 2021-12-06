@@ -5,9 +5,9 @@ This project takes a desired loan amount (with 8% annual interest and for 5 year
 
 The project asks for a Stellar account private key, which you can create here: https://laboratory.stellar.org/#account-creator?network=test
 
-2% of the interest paid with each repayment is sent to the borrower's stellar account as AUD
+2% of the interest paid with each repayment is sent to the borrower's stellar account as AUD.
 
-Paying less than the minimum repayment is not possible, and when the borrower pays more than the minimum they are rewarded for good behavior, receiving WNT in their Stellar account. The amount they receive is the lesser of these: the difference between minimum repayment and repayment made, or 2% of the interest paid
+Paying less than the minimum repayment is not possible, and when the borrower pays more than the minimum they are rewarded for good behavior, receiving WNT in their Stellar account. The amount they receive is the lesser of these: the difference between minimum repayment and repayment made, or 2% of the interest paid.
 
 ![image](https://user-images.githubusercontent.com/56001809/144936567-12410161-8a59-4820-a4fa-3ce542a2d621.png)
 
