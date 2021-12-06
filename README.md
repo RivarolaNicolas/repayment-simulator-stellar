@@ -1,4 +1,3 @@
-
 # Stellar Loan Repayment Simulator
 
 This project takes a desired loan amount (with 8% annual interest and for 5 years), calculates it's minimum payments and sends rewards using the Stellar blockchain.
@@ -16,3 +15,9 @@ Paying less than the minimum repayment is not possible, and when the borrower pa
 ![image](https://user-images.githubusercontent.com/56001809/144936661-c60f06db-7601-4521-ab64-6c88e99fc6b5.png)
 
 ![image](https://user-images.githubusercontent.com/56001809/144936696-c767ca5b-abe8-465a-86c0-ac3c63a39d01.png)
+
+# How to install
+
+Download the repo and run "npm install".
+
+ You can use the issuer account that comes hardcoded or you can create your own account on the Stellar laboratory and change the issuerAccountPrivateKey variable in /helpers/stellar.js to your own private key
