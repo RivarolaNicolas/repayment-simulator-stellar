@@ -13,7 +13,7 @@ import { SiStellar } from 'react-icons/si';
 const Home = (props) => {
   const [loanAmount, setLoanAmount] = useState(Number);
   const [minimumRepayment, setMinimumRepayment] = useState(Number);
-  const [repaymentAmount, setRepaymentAmount] = useState(0);
+  const [repaymentAmount, setRepaymentAmount] = useState(999999);
   const [totalLoanAmount, setTotalLoanAmount] = useState(Number);
   const [twoPercentOfInterestPaid, setTwoPercentOfInterestPaid] = useState(Number);
   const [borrowerRewards, setBorrowerRewards] = useState(Number);
