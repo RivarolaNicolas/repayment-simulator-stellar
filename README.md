@@ -16,8 +16,10 @@ Paying less than the minimum repayment is not possible, and when the borrower pa
 
 ![image](https://user-images.githubusercontent.com/56001809/144936696-c767ca5b-abe8-465a-86c0-ac3c63a39d01.png)
 
-# How to install
+# How to use
 
 Download the repo and run "npm install".
 
- You can use the issuer account that comes hardcoded or you can create your own account on the Stellar laboratory and change the issuerAccountPrivateKey variable in /helpers/stellar.js to your own private key
+To start the project run "npm run start", to run the unit tests run "npm run test", and "npm run cypress:open" for the integration test.
+
+You can use the issuer account that comes hardcoded or you can create your own account on the Stellar laboratory and change the issuerAccountPrivateKey variable in /helpers/stellar.js to your own private key
