@@ -22,4 +22,4 @@ Download the repo and run "npm install".
 
 To start the project run "npm run start", to run the unit tests run "npm run test", and "npm run cypress:open" for the integration test.
 
-You can use the issuer account that comes hardcoded or you can create your own account on the Stellar laboratory and change the issuerAccountPrivateKey variable in /helpers/stellar.js to your own private key
+You can use the issuer account that comes hardcoded or you can create your own account on the Stellar laboratory and change the issuerAccountPrivateKey variable in ./src/helpers/stellar.js to your own private key
