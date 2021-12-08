@@ -19,13 +19,10 @@ const Home = (props) => {
   const [borrowerRewards, setBorrowerRewards] = useState(Number);
   const [transactionSuccessful, setTransactionSuccessful] = useState(null);
   const [hide, setHide] = useState('invisible');
-
   const [alertMessage, setAlertMessage] = useState('');
   const [isHidden, setIsHidden] = useState(true);
   const [isMinimumRepaymentAlertHidden, setIsMinimumRepaymentAlertHidden] = useState(true);
-
-  const borrowerAccountPrivateKey = props.borrowerAccountPrivateKey;
-  const setBorrowerAccountPrivateKey = props.setBorrowerAccountPrivateKey;
+  const [borrowerAccountPrivateKey, setBorrowerAccountPrivateKey] = useState('');
 
   useEffect(() => {
     if (transactionSuccessful === true) {
@@ -58,7 +55,7 @@ const Home = (props) => {
   }, [minimumRepayment, repaymentAmount, twoPercentOfInterestPaid]);
 
   function handleSetLoanAmount(e) {
-    setLoanAmount(Number(e.target.value));
+    setLoanAmount(e.target.value);
   }
 
   function handleSetRepaymentAmount(e) {
@@ -110,7 +107,7 @@ const Home = (props) => {
               <div className="w-full">
                 <div className=" relative ">
                   <input
-                    type="text"
+                    type="number"
                     id="loan-amount"
                     onChange={handleSetLoanAmount}
                     className={
