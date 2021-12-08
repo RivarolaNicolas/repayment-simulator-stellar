@@ -55,7 +55,7 @@ const Home = (props) => {
   }, [minimumRepayment, repaymentAmount, twoPercentOfInterestPaid]);
 
   function handleSetLoanAmount(e) {
-    setLoanAmount(e.target.value);
+    setLoanAmount(Number(e.target.value));
   }
 
   function handleSetRepaymentAmount(e) {
