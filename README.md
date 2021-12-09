@@ -1,6 +1,6 @@
 # Stellar Loan Repayment Simulator
 
-This project takes a desired loan amount (with 8% annual interest and for 5 years), calculates it's minimum payments and sends rewards using the Stellar blockchain.
+This project takes a desired loan amount (with 8% annual interest and for 5 years), calculates it's minimum payments, and on each monthly payment sends rewards using the Stellar blockchain. Made using React
 
 The project asks for a Stellar account private key, which you can create here: https://laboratory.stellar.org/#account-creator?network=test
 
