@@ -18,6 +18,12 @@ describe('Submit transaction', () => {
     cy.get('#repayment-amount').clear().type('610').should('have.class', 'border-gray-300');
   });
 
+  it('checks that the input updates when clicking the minimum repayment button', () => {
+    cy.get('#set-minimum-repayment').click();
+
+    cy.get('#repayment-amount').should('have.value', '608.29');
+  });
+
   it('checks that you cant submit a transaction if the private key is invalid', () => {
     cy.get('#private-key').type('asd123');
 
