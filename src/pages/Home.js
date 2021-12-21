@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   calculateMinimumRepayment,
   calculateTotalLoanAmount,
@@ -13,7 +13,7 @@ import { SiStellar } from 'react-icons/si';
 const Home = (props) => {
   const [loanAmount, setLoanAmount] = useState(Number);
   const [minimumRepayment, setMinimumRepayment] = useState(Number);
-  const [repaymentAmount, setRepaymentAmount] = useState(999999);
+  const [repaymentAmount, setRepaymentAmount] = useState(99999);
   const [totalLoanAmount, setTotalLoanAmount] = useState(Number);
   const [twoPercentOfInterestPaid, setTwoPercentOfInterestPaid] = useState(Number);
   const [borrowerRewards, setBorrowerRewards] = useState(Number);
@@ -23,6 +23,7 @@ const Home = (props) => {
   const [isHidden, setIsHidden] = useState(true);
   const [isMinimumRepaymentAlertHidden, setIsMinimumRepaymentAlertHidden] = useState(true);
   const [borrowerAccountPrivateKey, setBorrowerAccountPrivateKey] = useState('');
+  const input = useRef(null);
 
   useEffect(() => {
     if (transactionSuccessful === true) {
@@ -60,6 +61,10 @@ const Home = (props) => {
 
   function handleSetRepaymentAmount(e) {
     setRepaymentAmount(Number(e.target.value));
+  }
+
+  function handleUpdateRefValue() {
+    input.current.value = Number(minimumRepayment.toFixed(2));
   }
 
   function handleSetBorrowerAccountPrivateKey(e) {
@@ -128,15 +133,21 @@ const Home = (props) => {
                     type='text'
                     id='repayment-amount'
                     onChange={handleSetRepaymentAmount}
+                    ref={input}
                     className={
-                      repaymentAmount > minimumRepayment
+                      repaymentAmount.toFixed(2) >= minimumRepayment.toFixed(2)
                         ? 'rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent '
                         : 'rounded-lg border-transparent flex-1 appearance-none border border-red-500 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent '
                     }
-                    placeholder='Repayment amount'
                   />
                   <p className='text-gray-500 mt-2'>
-                    {`The minimum repayment amount is ${minimumRepayment.toFixed(2)}`}
+                    {`The minimum repayment amount is `}
+                    <button
+                      id='set-minimum-repayment'
+                      className='border-b border-gray-700'
+                      onClick={handleUpdateRefValue}>
+                      {minimumRepayment.toFixed(2)}
+                    </button>
                   </p>
                 </div>
               </div>
