@@ -64,7 +64,7 @@ export const transactionSubmitter = (
           StellarSdk.Operation.payment({
             destination: receivingKeys.publicKey(),
             asset: WNT,
-            amount: borrowerRewards.toFixed(2) != 0 ? borrowerRewards.toFixed(2) : '0.01',
+            amount: borrowerRewards.toFixed(2) != 0 ? borrowerRewards.toFixed(2) : '0.0000001',
           })
         )
         // setTimeout is required for a transaction
