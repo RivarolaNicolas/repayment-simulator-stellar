@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/repayment-simulator-stellar/static/css/main.c27e4d01.chunk.css",
-    "main.js": "/repayment-simulator-stellar/static/js/main.b7efd20c.chunk.js",
-    "main.js.map": "/repayment-simulator-stellar/static/js/main.b7efd20c.chunk.js.map",
+    "main.js": "/repayment-simulator-stellar/static/js/main.69de8c98.chunk.js",
+    "main.js.map": "/repayment-simulator-stellar/static/js/main.69de8c98.chunk.js.map",
     "runtime-main.js": "/repayment-simulator-stellar/static/js/runtime-main.ceb328a8.js",
     "runtime-main.js.map": "/repayment-simulator-stellar/static/js/runtime-main.ceb328a8.js.map",
     "static/js/2.61ba3ccb.chunk.js": "/repayment-simulator-stellar/static/js/2.61ba3ccb.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.ceb328a8.js",
     "static/js/2.61ba3ccb.chunk.js",
     "static/css/main.c27e4d01.chunk.css",
-    "static/js/main.b7efd20c.chunk.js"
+    "static/js/main.69de8c98.chunk.js"
   ]
 }
