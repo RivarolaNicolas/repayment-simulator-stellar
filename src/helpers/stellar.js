@@ -44,7 +44,7 @@ export const transactionSubmitter = (
       return server.submitTransaction(transaction);
     })
 
-    .then(console.log('asd'))
+    .then(console.log())
 
     // Second, the issuing account actually sends a payment using the asset
     .then(() => server.loadAccount(issuingKeys.publicKey()))
@@ -70,14 +70,12 @@ export const transactionSubmitter = (
         // setTimeout is required for a transaction
         .setTimeout(100)
         .build();
-      console.log(transaction);
       transaction.sign(issuingKeys);
 
       return server.submitTransaction(transaction);
     })
     .then(
       () => setTransactionSuccessful(true),
-
       () => setTransactionSuccessful(false)
     )
     .catch((error) => {
