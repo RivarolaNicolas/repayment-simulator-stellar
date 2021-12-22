@@ -36,7 +36,13 @@ export const transactionSubmitter = (
             asset: AUD,
           })
         )
-
+        .addOperation(
+          StellarSdk.Operation.payment({
+            destination: receivingKeys.publicKey(),
+            asset: AUD,
+            amount: twoPercentOfInterestPaid.toFixed(2),
+          })
+        )
         // setTimeout is required for a transaction
         .setTimeout(100)
         .build();
@@ -46,33 +52,27 @@ export const transactionSubmitter = (
 
     .then(console.log())
 
-    // Second, the issuing account actually sends a payment using the asset
     .then(() => server.loadAccount(issuingKeys.publicKey()))
     .then((issuer) => {
-      const transaction = new StellarSdk.TransactionBuilder(issuer, {
-        fee: StellarSdk.BASE_FEE,
-        networkPassphrase: StellarSdk.Networks.TESTNET,
-      })
-        .addOperation(
-          StellarSdk.Operation.payment({
-            destination: receivingKeys.publicKey(),
-            asset: AUD,
-            amount: twoPercentOfInterestPaid.toFixed(2),
-          })
-        )
-        .addOperation(
-          StellarSdk.Operation.payment({
-            destination: receivingKeys.publicKey(),
-            asset: WNT,
-            amount: borrowerRewards.toFixed(2) != 0 ? borrowerRewards.toFixed(2) : '0.0000001',
-          })
-        )
-        // setTimeout is required for a transaction
-        .setTimeout(100)
-        .build();
-      transaction.sign(issuingKeys);
+      if (borrowerRewards != 0) {
+        const transaction = new StellarSdk.TransactionBuilder(issuer, {
+          fee: StellarSdk.BASE_FEE,
+          networkPassphrase: StellarSdk.Networks.TESTNET,
+        })
+          .addOperation(
+            StellarSdk.Operation.payment({
+              destination: receivingKeys.publicKey(),
+              asset: WNT,
+              amount: borrowerRewards.toFixed(2),
+            })
+          )
+          // setTimeout is required for a transaction
+          .setTimeout(100)
+          .build();
+        transaction.sign(issuingKeys);
 
-      return server.submitTransaction(transaction);
+        return server.submitTransaction(transaction);
+      }
     })
     .then(
       () => setTransactionSuccessful(true),
