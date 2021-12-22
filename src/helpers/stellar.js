@@ -44,7 +44,7 @@ export const transactionSubmitter = (
       return server.submitTransaction(transaction);
     })
 
-    .then(console.log())
+    .then(console.log('asd'))
 
     // Second, the issuing account actually sends a payment using the asset
     .then(() => server.loadAccount(issuingKeys.publicKey()))
@@ -56,25 +56,28 @@ export const transactionSubmitter = (
         .addOperation(
           StellarSdk.Operation.payment({
             destination: receivingKeys.publicKey(),
-            asset: WNT,
-            amount: borrowerRewards.toFixed(2),
+            asset: AUD,
+            amount: twoPercentOfInterestPaid.toFixed(2),
           })
         )
         .addOperation(
           StellarSdk.Operation.payment({
             destination: receivingKeys.publicKey(),
-            asset: AUD,
-            amount: twoPercentOfInterestPaid.toFixed(2),
+            asset: WNT,
+            amount: borrowerRewards.toFixed(2) != 0 ? borrowerRewards.toFixed(2) : '0.01',
           })
         )
         // setTimeout is required for a transaction
         .setTimeout(100)
         .build();
+      console.log(transaction);
       transaction.sign(issuingKeys);
+
       return server.submitTransaction(transaction);
     })
     .then(
       () => setTransactionSuccessful(true),
+
       () => setTransactionSuccessful(false)
     )
     .catch((error) => {
