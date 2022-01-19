@@ -19,9 +19,8 @@ const Home = (props) => {
   const [borrowerRewards, setBorrowerRewards] = useState(Number);
   const [transactionSuccessful, setTransactionSuccessful] = useState(null);
   const [hide, setHide] = useState('invisible');
-  const [alertMessage, setAlertMessage] = useState('');
   const [isHidden, setIsHidden] = useState(true);
-  const [isMinimumRepaymentAlertHidden, setIsMinimumRepaymentAlertHidden] = useState(true);
+  const [alertMessage, setAlertMessage] = useState('');
   const [borrowerAccountPrivateKey, setBorrowerAccountPrivateKey] = useState('');
 
   useEffect(() => {
@@ -82,13 +81,6 @@ const Home = (props) => {
     );
   }
 
-  useEffect(() => {
-    if (minimumRepayment <= repaymentAmount) {
-      setIsMinimumRepaymentAlertHidden(true);
-    } else if (minimumRepayment > repaymentAmount) {
-      setIsMinimumRepaymentAlertHidden(false);
-    }
-  }, [minimumRepayment, repaymentAmount]);
 
   return (
     <div className='overflow-x-hidden overflow-y-hidden '>

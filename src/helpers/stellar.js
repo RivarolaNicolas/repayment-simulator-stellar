@@ -1,7 +1,6 @@
 const StellarSdk = require('stellar-sdk');
-
-const issuerAccountPrivateKey = 'SA3R3BAGXSXOKUKFGKTYP2GONMTPPGEFBYLFMAAM5LI33ZKYDQ7TIPJC';
-
+const issuerAccountPrivateKey = 'SBIV2YLZUQ2BY2SQGD6W4DKUQ7LDRVHLOKIIALO4V2NY5IR2AAF5H7XM';
+const poolAccountPrivateKey = 'SDFPMDO5YBTRI4KJQA3GKIU6CR3DJ4UVEXXRVVMUKIZDFI5KNRXOWIM6'
 // eslint-disable-next-line import/prefer-default-export
 export const transactionSubmitter = (
   borrowerAccountPrivateKey,
@@ -13,6 +12,7 @@ export const transactionSubmitter = (
   // Keys for accounts to issue and receive the new asset
   const issuingKeys = StellarSdk.Keypair.fromSecret(issuerAccountPrivateKey);
   const receivingKeys = StellarSdk.Keypair.fromSecret(borrowerAccountPrivateKey);
+  const poolKeys = StellarSdk.Keypair.fromSecret(poolAccountPrivateKey)
 
   // Create an object to represent the new asset
   const WNT = new StellarSdk.Asset('WNT', issuingKeys.publicKey());
@@ -34,12 +34,14 @@ export const transactionSubmitter = (
         .addOperation(
           StellarSdk.Operation.changeTrust({
             asset: AUD,
+            source: poolKeys.publicKey(),
           })
         )
         .addOperation(
           StellarSdk.Operation.payment({
-            destination: receivingKeys.publicKey(),
             asset: AUD,
+            destination: poolKeys.publicKey(),
+            source: issuingKeys.publicKey(),
             amount: twoPercentOfInterestPaid.toFixed(2),
           })
         )
@@ -47,6 +49,9 @@ export const transactionSubmitter = (
         .setTimeout(100)
         .build();
       transaction.sign(receivingKeys);
+      transaction.sign(issuingKeys);
+      transaction.sign(poolKeys);
+  
       return server.submitTransaction(transaction);
     })
 
